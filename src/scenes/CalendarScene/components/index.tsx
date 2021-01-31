@@ -14,6 +14,20 @@ export const Container = styled.div`
     width: 100%;
 `
 
+export const LogoutButton = styled.div`
+    margin: 32px 16px 16px 16px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid ${Colors.primaryColor};
+    padding: 8px;
+    width: 90%;
+    border-radius: 7px;
+    color: ${Colors.primaryColor};
+    font-weight: bold;
+    font-size: 18px;
+    background-color: #fff;
+`
+
 export const Body = styled.div`
     display: flex;
     flex-direction: column;

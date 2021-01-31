@@ -13,7 +13,8 @@ import {
     ChartCard,
     Container,
     ScrollableCardBody, 
-    Body
+    Body,
+    LogoutButton
 } from './components/index';
 import { Card } from 'antd';
 
@@ -27,7 +28,7 @@ import { Card } from 'antd';
 
 class CalendarScene extends Component<RouteComponentProps>{
 
-    // @resolve(StudentRepository) private studentRepo!: StudentRepository
+    @resolve(StudentRepository) private studentRepo!: StudentRepository
 
     // state = {
     //     isLoading: true,
@@ -54,6 +55,10 @@ class CalendarScene extends Component<RouteComponentProps>{
         // }
     }
 
+    logout = () => {
+        this.studentRepo.logout()
+        this.props.history.replace('/login')
+    }
 
     render() {
         // const { isLoading, progressDataSets } = this.state
@@ -65,6 +70,7 @@ class CalendarScene extends Component<RouteComponentProps>{
                     <Body>
                        <p>Calendario</p>
                     </Body>
+                    <LogoutButton onClick={() => this.logout()}>Logout</LogoutButton>
                 </Container>
             </>
 
