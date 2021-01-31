@@ -1,0 +1,9 @@
+{
+  "short_name": "amartIG",
+  "name": "amartIG",
+  "description": "Aplicativo da SmartIG",
+  "start_url": "/",
+  "background_color": "#000000",
+  "display": "standalone",
+  "theme_color": "#000000"
+}
