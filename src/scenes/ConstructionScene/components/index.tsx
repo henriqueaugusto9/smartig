@@ -20,7 +20,6 @@ export const Body = styled.div`
     justify-content: flex-start;
     align-items: center;
     height: 100%;
-    width: 100%;
     margin: 0 16px 56px 16px;
     padding: 32px 0 32px 0;
     overflow-y: scroll;
@@ -53,6 +52,15 @@ export const ScrollableCardBody = styled.div`
     ::-webkit-scrollbar {
         width: 0px;
     }
+`
+
+export const ValueText = styled.span`
+    font-size: 18px
+`
+
+export const ValueLink = styled.a`
+    font-size: 18px;
+    word-break: break-all;
 `
 
 export const ChartCard: React.FC = (props) => {

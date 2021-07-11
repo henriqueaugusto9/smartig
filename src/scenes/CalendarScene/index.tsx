@@ -4,19 +4,10 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
 import { Header } from '../../components';
-import { StudentRepository } from '../../repositories/StudentRepository';
-import Colors from '../../utils/colors';
-import ReactLoading from 'react-loading';
-import { Line } from 'react-chartjs-2';
+import { AppRepository } from '../../repositories/AppRepository';
 import {
-    CardTitle,
-    ChartCard,
-    Container,
-    ScrollableCardBody, 
-    Body,
-    LogoutButton
+    Body, Container, LogoutButton
 } from './components/index';
-import { Card } from 'antd';
 
 // type Progress = {
 //     title: string,
@@ -28,7 +19,7 @@ import { Card } from 'antd';
 
 class CalendarScene extends Component<RouteComponentProps>{
 
-    @resolve(StudentRepository) private studentRepo!: StudentRepository
+    @resolve(AppRepository) private studentRepo!: AppRepository
 
     // state = {
     //     isLoading: true,

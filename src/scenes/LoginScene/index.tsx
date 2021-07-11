@@ -4,7 +4,7 @@ import { Button, Card, Image } from 'antd'
 import { Link } from 'react-router-dom'
 import { TextField } from '../../components'
 import { ButtonContainer, Container, DiagonalContainer, ErrorMessage, InputContainer, LogoContainer } from './components'
-import StudentService from '../../services/StudentService'
+import AppService from '../../services/UserService'
 import { resolve } from 'inversify-react'
 import ReactLoading from 'react-loading';
 import { Tabs } from '../../utils/tabs';
@@ -17,7 +17,7 @@ const windowWidth = window.innerWidth
 class LoginScene extends Component<RouteComponentProps> {
 
 
-    @resolve(StudentService) private studentServ!: StudentService
+    @resolve(AppService) private studentServ!: AppService
 
     state = {
         email: '',
