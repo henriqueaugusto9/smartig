@@ -1,7 +1,7 @@
 import { Card } from 'antd';
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
-import Colors from '../../../utils/colors'
+import Colors from '../../../utils/colors';
 
 export const Container = styled.div`
     display: flex;

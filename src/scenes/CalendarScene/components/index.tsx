@@ -1,11 +1,11 @@
-import { Card } from 'antd';
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
-import Colors from '../../../utils/colors'
+import { CardComponent } from '../../../components';
+import Colors from '../../../utils/colors';
 
 export const Container = styled.div`
     display: flex;
-    position: fixed;
+    position: fixed;/*  */
     top: 69px;
     bottom: 56px;
     flex-direction: column;
@@ -70,7 +70,7 @@ export const ScrollableCardBody = styled.div`
 `
 
 export const ChartCard: React.FC = (props) => {
-    return <Card
+    return <CardComponent
         style={{
             width: '90%',
             borderRadius: '7px',
@@ -85,5 +85,5 @@ export const ChartCard: React.FC = (props) => {
         }}
     >
         {props.children}
-    </Card>
+    </CardComponent>
 } 

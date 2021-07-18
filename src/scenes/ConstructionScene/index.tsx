@@ -7,6 +7,7 @@ import ReactLoading from 'react-loading';
 import { StaticContext, withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
 import {
+    CardComponent,
     Divider,
     InputRow,
     Label,
@@ -21,7 +22,7 @@ import {
 import _ from 'lodash'
 
 type LocationState = {
-    pdfUrl: string
+    url: string
 }
 
 class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext, LocationState>>{
@@ -46,8 +47,8 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
         }
     }
 
-    openPdfLink = (pdfUrl: string) => {
-        this.props.history.push({ pathname: `/showPdf/`, state: { pdfUrl: pdfUrl } })
+    openPdfLink = (url: string) => {
+        this.props.history.push({ pathname: `/showPdf/`, state: { url: url } })
     }
 
     render() {
@@ -60,7 +61,7 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
 
 
 
-                    {!isLoading && <Card
+                    {!isLoading && <CardComponent
                         style={{
                             marginTop: '16px',
                             width: '100%',
@@ -76,7 +77,9 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
                     >
 
                         <InputRow style={{ justifyContent: 'flex-end', padding: 0, marginBottom: '-16px' }}>
-                            <div onClick={() => this.setState({ isCardOpen: !isCardOpen })}>{isCardOpen ? <KeyboardArrowUp style={{ fontSize: 32 }} /> : <KeyboardArrowDown style={{ fontSize: 32 }} />}</div>
+                            <div onClick={() => this.setState({ isCardOpen: !isCardOpen })}>
+                                {isCardOpen ? <KeyboardArrowUp style={{ fontSize: 32 }} /> : <KeyboardArrowDown style={{ fontSize: 32 }} />}
+                            </div>
                         </InputRow>
                         <InputRow>
                             <Label>
@@ -145,7 +148,7 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
                                 </ValueLink>
                             </InputRow>
                         </>}
-                    </Card>}
+                    </CardComponent>}
                 </Body>
             </>
         )

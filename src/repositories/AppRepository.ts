@@ -1,7 +1,9 @@
 import { detect } from 'detect-browser';
 import { injectable } from 'inversify';
+import { AnyKindOfDictionary } from 'lodash';
 import { Container } from 'unstated';
 import ConstructionAPI from '../api/construction';
+import FinanceAPI from '../api/finance';
 import HomeAPI from '../api/home';
 import ProfileAPI from '../api/profile';
 import ProgressAPI from '../api/progress';
@@ -17,7 +19,8 @@ type AppRepositoryState = {
     reviews: Array<any> | null,
     token: string | null,
     construction: any,
-    tab: Tabs
+    finance: any,
+    tab: Tabs,
 }
 
 type GetReviewsParams = {
@@ -32,8 +35,9 @@ export class AppRepository extends Container<AppRepositoryState> {
         token: null,
         progress: null,
         reviews: null,
+        finance: null,
         construction: EMPTY_CONSTRUCTION,
-        tab: Tabs.CONSTRUCTION
+        tab: Tabs.CONSTRUCTION,
     }
 
     get tab() {
@@ -88,7 +92,6 @@ export class AppRepository extends Container<AppRepositoryState> {
             }
         }
         let response = await ProgressAPI.getProgress({ token: this.state.token! })
-        // console.log('progress response: ', response)
         if (response === null) {
             return null
         }
@@ -119,14 +122,22 @@ export class AppRepository extends Container<AppRepositoryState> {
 
     getConstructionData = async () => {
         const token = localStorage.getItem('token');
-        console.log('getConstructionData token: ', token)
         let response = await ConstructionAPI.getConstruction(token as string)
-        console.log('getConstructionData response: ', response)
         if (response === null && response.length === 0) {
             return EMPTY_CONSTRUCTION
         }
         await this.setState({ construction: response[0] })
         return this.state.construction!
+    }
+
+    getFinance = async () => {
+        const token = localStorage.getItem('token');
+        let response = await FinanceAPI.getFinance(token as string)
+        if (response === null && response.length === 0) {
+            return { link: '' }
+        }
+        await this.setState({ finance: response[0] })
+        return this.state.finance!
     }
 
     getLocalToken = async () => {
