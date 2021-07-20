@@ -33,16 +33,26 @@ interface HeaderProps {
     backgroundColor?: string
     canGoBack?: boolean
     goBackTo?: string
+    onGoBack?: () => void
     color?: string
     title: string
     suffixComponent?: JSX.Element
 }
 
-export const Header: React.FC<HeaderProps> = ({ backgroundColor = Colors.primaryColor, color = '#fff', canGoBack = false, goBackTo, title, suffixComponent }) => {
+export const Header: React.FC<HeaderProps> = (
+    { backgroundColor = Colors.primaryColor,
+        color = '#fff',
+        canGoBack = false,
+        goBackTo,
+        onGoBack = () => { },
+        title,
+        suffixComponent }
+) => {
 
     const history = useHistory()
 
     const goBack = () => {
+        onGoBack()
         if (goBackTo != null) {
             let tab = Tabs.CONSTRUCTION
             switch (goBackTo) {
@@ -68,6 +78,8 @@ export const Header: React.FC<HeaderProps> = ({ backgroundColor = Colors.primary
             history.goBack()
         }
     }
+    
+    console.log('canGoBack: ', canGoBack)
 
     return <Container id="header" style={{ backgroundColor }}>
         {canGoBack && <ChevronLeft onClick={() => goBack()} style={{

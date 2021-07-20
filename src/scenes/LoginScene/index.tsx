@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
-import { withRouter, RouteComponentProps } from 'react-router'
-import { Button, Card, Image } from 'antd'
-import { Link } from 'react-router-dom'
-import { TextField } from '../../components'
-import { ButtonContainer, Container, DiagonalContainer, ErrorMessage, InputContainer, LogoContainer } from './components'
-import StudentService from '../../services/StudentService'
+import { Button, Image } from 'antd'
 import { resolve } from 'inversify-react'
-import ReactLoading from 'react-loading';
-import { Tabs } from '../../utils/tabs';
+import React, { Component } from 'react'
+import ReactLoading from 'react-loading'
+import { RouteComponentProps, withRouter } from 'react-router'
+import { Link } from 'react-router-dom'
+import { CardComponent, TextField } from '../../components'
+import AppService from '../../services/UserService'
 import Colors from '../../utils/colors'
+import { Tabs } from '../../utils/tabs'
+import { ButtonContainer, Container, DiagonalContainer, ErrorMessage, InputContainer, LogoContainer } from './components'
 
 
 const windowHeight = window.innerHeight
@@ -17,7 +17,7 @@ const windowWidth = window.innerWidth
 class LoginScene extends Component<RouteComponentProps> {
 
 
-    @resolve(StudentService) private studentServ!: StudentService
+    @resolve(AppService) private studentServ!: AppService
 
     state = {
         email: '',
@@ -59,7 +59,7 @@ class LoginScene extends Component<RouteComponentProps> {
         return (
             <Container>
                 <DiagonalContainer></DiagonalContainer>
-                <Card style={{
+                <CardComponent style={{
                     height: `${windowWidth < 768 ? '60%' : '70%'}`,
                     width: `${windowWidth < 768 ? '80%' : '50%'}`, borderRadius: '7px',
                     marginTop: `-${windowHeight < 920 ? '256' : windowHeight * 0.35}px`
@@ -87,7 +87,7 @@ class LoginScene extends Component<RouteComponentProps> {
                                 'Entrar'
                         }</Button>
                     </ButtonContainer>
-                </Card>
+                </CardComponent>
             </Container>
         )
     }

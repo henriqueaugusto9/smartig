@@ -12,6 +12,7 @@ import { UNSTATED_CONTAINERS } from './repositories/UnstatedBinds';
 import LoginScene from './scenes/LoginScene'
 import HomeScene from './scenes/ProgressScene'
 import TabBarScene from './scenes/TabBarScene'
+import { WebViewScene } from './scenes/WebViewScene';
 
 class App extends Component {
 
@@ -21,7 +22,7 @@ class App extends Component {
 
     componentDidMount() {
         const token = localStorage.getItem('token')
-        if (token != null) {
+        if (token !== null) {
             this.setState({ redirectTo: '/home' })
         }
     }
@@ -35,6 +36,8 @@ class App extends Component {
                             <Route exact path="/" render={() => <Redirect to={this.state.redirectTo} />} />
                             <Route exact path='/home' component={TabBarScene} />
                             <Route exact path='/login' component={LoginScene} />
+                            <Route exact path='/showPdf/' component={WebViewScene} />
+                            <Route exact path='/showSheets/' component={WebViewScene} />
                         </Switch>
                     </Router>
                 </UnstatedProvider>

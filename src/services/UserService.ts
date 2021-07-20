@@ -1,6 +1,6 @@
 import AuthAPI from '../api/auth';
 import { inject, injectable } from "inversify";
-import { StudentRepository } from '../repositories/StudentRepository';
+import { AppRepository } from '../repositories/AppRepository';
 import ReviewAPI from '../api/review';
 import ProfileAPI from '../api/profile';
 import SubjectAPI from '../api/subject';
@@ -28,22 +28,22 @@ type CheckSessionParams = {
 }
 
 @injectable()
-class StudentService {
+class AppService {
 
-    @inject(StudentRepository) private studentRepo!: StudentRepository
+    @inject(AppRepository) private appRepo!: AppRepository
 
     login = async ({ email, password }: LoginParams) => {
         let response = await AuthAPI.authStudent({ email, password })
 
         if (response != null && response.token != null) {
-            this.studentRepo.setStudent(response.student, response.token)
+            this.appRepo.setUser(response.student, response.token)
             return true
         }
         return false
     }
 
     checkSessionStatus = async ({ goBack }: CheckSessionParams) => {
-        const token = await this.studentRepo.getLocalToken()
+        const token = await this.appRepo.getLocalToken()
         if (token != null) {
             return token
         } else {
@@ -53,27 +53,27 @@ class StudentService {
     }
 
     editReview = async (review: ReviewParams) => {
-        const token = await this.studentRepo.getLocalToken()
+        const token = await this.appRepo.getLocalToken()
         if (token == null) {
             return false
         }
         const response = await ReviewAPI.putReview(review, { token })
         if (response != null && response.review != null) {
-            await this.studentRepo.getReviews({ forceUpdate: true })
+            await this.appRepo.getReviews({ forceUpdate: true })
             return true
         }
         return false
     }
 
     addReview = async (review: ReviewParams) => {
-        const token = await this.studentRepo.getLocalToken()
+        const token = await this.appRepo.getLocalToken()
         if (token == null) {
             return false
         }
         const response = await ReviewAPI.postReview(review, { token })
 
         if (response != null && response.review != null) {
-            await this.studentRepo.getReviews({ forceUpdate: true })
+            await this.appRepo.getReviews({ forceUpdate: true })
             return true
         }
         return false
@@ -81,7 +81,7 @@ class StudentService {
 
 
     deleteReview = async (id: string) => {
-        const token = await this.studentRepo.getLocalToken()
+        const token = await this.appRepo.getLocalToken()
         if (token == null) {
             return false
         }
@@ -106,7 +106,7 @@ class StudentService {
             }
         }
 
-        const token = await this.studentRepo.getLocalToken()
+        const token = await this.appRepo.getLocalToken()
         if (token == null) {
             return false
         }
@@ -117,40 +117,6 @@ class StudentService {
         return false
     }
 
-    editClassPerformance = async ({ performance, classID }: ClassParams) => {
-        const home = await this.studentRepo.getHomeData()
-        const plan = home.plan[0]
-
-        let newContents = plan.contents.map((content: any) => {
-            let newContent = content
-            newContent.subject.chapter = content.subject.chapter.map((chapter: any) => {
-                let newChapter = chapter
-                newChapter.classes = chapter.classes.map((c: any) => {
-                    if (c._id == classID) {
-                        let newClass = c
-                        newClass.performance = performance
-                        return newClass
-                    } else {
-                        return c
-                    }
-                })
-                return newChapter
-            })
-
-            return newContent
-        })
-
-        const token = await this.studentRepo.getLocalToken()
-        if (token == null) {
-            return false
-        }
-        const result = await SubjectAPI.editClass({ planID: plan._id, contents: newContents }, { token })
-        if (result != null && result.studyplan != null) {
-            return true
-        }
-        return false
-    }
-
 }
 
-export default StudentService
+export default AppService

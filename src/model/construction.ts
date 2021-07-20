@@ -1,0 +1,23 @@
+
+
+export type Construction = {
+    docs: { ART: string, alana: string, habiteSe: string, matricula: string, relContribuinte: string },
+    endereco: string,
+    inicioContrato: string,
+    lote: string,
+    owner: string,
+    proprietario: string,
+    quadra: string,
+    _id: string
+}
+
+export const EMPTY_CONSTRUCTION = {
+    docs: { ART: '', alana: '', habiteSe: '', matricula: '', relContribuinte: '' },
+    endereco: '',
+    inicioContrato: '',
+    lote: '',
+    owner: '',
+    proprietario: '',
+    quadra: '',
+    _id: ''
+} as Construction

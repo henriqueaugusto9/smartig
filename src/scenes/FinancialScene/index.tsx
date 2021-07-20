@@ -3,19 +3,11 @@ import { resolve } from 'inversify-react';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
-import { Header } from '../../components';
-import { StudentRepository } from '../../repositories/StudentRepository';
-import Colors from '../../utils/colors';
-import ReactLoading from 'react-loading';
-import { Line } from 'react-chartjs-2';
+import { Header, LoadingComponent } from '../../components';
+import { AppRepository } from '../../repositories/AppRepository';
 import {
-    CardTitle,
-    ChartCard,
-    Container,
-    ScrollableCardBody, 
-    Body
+    Body, Container
 } from './components/index';
-import { Card } from 'antd';
 
 // type Progress = {
 //     title: string,
@@ -50,45 +42,39 @@ const defaultDataSets = (label: string, color: string, data: Array<any>) => {
 
 class FinancialScene extends Component<RouteComponentProps>{
 
-    // @resolve(StudentRepository) private studentRepo!: StudentRepository
+    @resolve(AppRepository) private appRepo!: AppRepository
 
-    // state = {
-    //     isLoading: true,
-    //     progressDataSets: new Array()
-    // }
+
+    state = {
+        isLoading: true,
+        url: ''
+    }
+
 
     async componentDidMount() {
-        // const result = await this.studentRepo.getProgress()
-        // if (result.progress != null && result.progress.length > 0) {
-        //     let progressDataSets = result.progress.map((p: any) => {
-        //         let dataSet = defaultDataSets(p.title, Colors.primaryColor, p.data)
-        //         let chartData = {
-        //             labels: p.data.map(() => ''),
-        //             datasets: [
-        //                 dataSet
-        //             ]
-        //         };
-        //         return { title: p.title, data: chartData }
-        //     })
-
-        //     this.setState({ isLoading: false, progressDataSets })
-        // } else {
-        //     this.props.history.replace('/login')
-        // }
+        const finance = await this.appRepo.getFinance()
+        if (finance != null) {
+            this.setState({ isLoading: false, url: finance.link })
+        } else {
+            this.props.history.replace('/login')
+        }
     }
 
 
     render() {
-        // const { isLoading, progressDataSets } = this.state
-        // const progress = this.studentRepo.progress!
+        const { isLoading, url } = this.state
+
+        const parsedUrl = url.replace('spreadsheets/d', 'spreadsheets/d/e')
+        .replace(/edit(.*)/, 'pubhtml?widget=true&amp;headers=false')
+
+        console.log(parsedUrl)
         return (
             <>
-                <Header title='Financeiro' />
-                <Container>
-                    <Body>
-                       <p>Financeiro</p>
-                    </Body>
-                </Container>
+                <LoadingComponent show={isLoading} />
+                {!isLoading && <iframe
+                    src={parsedUrl}
+                    style={{ width: '100%', height: '100%', overflowY: 'hidden' }}
+                />}
             </>
 
         )
