@@ -2,6 +2,7 @@ import { detect } from 'detect-browser';
 import { injectable } from 'inversify';
 import { AnyKindOfDictionary } from 'lodash';
 import { Container } from 'unstated';
+import AppointmentAPI from '../api/AppointmentAPI';
 import ConstructionAPI from '../api/construction';
 import FinanceAPI from '../api/finance';
 import HomeAPI from '../api/home';
@@ -15,6 +16,7 @@ const browser = detect()
 
 type AppRepositoryState = {
     user: any | null,
+    appointments: Array<any>
     progress: any | null,
     reviews: Array<any> | null,
     token: string | null,
@@ -33,11 +35,16 @@ export class AppRepository extends Container<AppRepositoryState> {
     readonly state: AppRepositoryState = {
         user: null,
         token: null,
+        appointments: new Array(),
         progress: null,
         reviews: null,
         finance: null,
         construction: EMPTY_CONSTRUCTION,
         tab: Tabs.CONSTRUCTION,
+    }
+
+    get appointments() {
+        return this.state.appointments
     }
 
     get tab() {
@@ -62,6 +69,33 @@ export class AppRepository extends Container<AppRepositoryState> {
         //     await this.getHomeData()
         // }
         await this.setState({ tab })
+    }
+
+    getAppointments = async (): Promise<Array<any>> => {
+        const { token, user } = this.state
+
+        if (token === null) {
+            const localToken = this.getLocalToken()
+            if (localToken === null) {
+                return new Array()
+            }
+        }
+        console.log(user)
+
+        let response = await AppointmentAPI.getAllAppointments(user._id, this.state.token!)
+
+        if (response === null) {
+            return new Array()
+        }
+        // response.map((ap: any) => {
+        //     let newAp = ap
+        //     let date = ap.date.split('-')
+        //     newAp.date = date[2] + '/' + date[1] + '/' + date[0]
+        //     return newAp
+        // })
+        await this.setState({ appointments: response })
+
+        return this.state.appointments!
     }
 
     getReviews = async ({ forceUpdate }: GetReviewsParams): Promise<Array<any>> => {
@@ -123,7 +157,7 @@ export class AppRepository extends Container<AppRepositoryState> {
     getConstructionData = async () => {
         const token = localStorage.getItem('token');
         let response = await ConstructionAPI.getConstruction(token as string)
-        if (response === null && response.length === 0) {
+        if (response === null || response.length === 0) {
             return EMPTY_CONSTRUCTION
         }
         await this.setState({ construction: response[0] })
@@ -156,6 +190,7 @@ export class AppRepository extends Container<AppRepositoryState> {
             const localUser = localStorage.getItem('user');
             if (localUser != null) {
                 let userJson = JSON.parse(localUser)
+                console.log('user', userJson)
                 await this.setState({ user: userJson })
             } else {
                 return null

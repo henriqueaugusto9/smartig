@@ -23,6 +23,7 @@
     "antd": "^4.6.6",
     "antd-mask-input": "^0.1.14",
     "axios": "^0.21.1",
+    "dayjs": "^1.10.6",
     "detect-browser": "^5.2.0",
     "inversify": "^5.0.1",
     "inversify-react": "^0.4.3",

@@ -25,6 +25,10 @@ class TabBarScene extends Component<RouteComponentProps> {
 
     @resolve(AppRepository) private appRepo!: AppRepository
 
+    componentDidMount(){
+        this.appRepo.getUser()
+    }
+
     onChangeTab = async (e: React.ChangeEvent<{}>, tab: Tabs) => {
         await this.appRepo.setTab(tab)
         this.setState({ tab })
