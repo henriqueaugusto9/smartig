@@ -3,14 +3,14 @@ import { resolve } from 'inversify-react'
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import { RouteComponentProps } from 'react-router-dom'
-import { Divider, Header, LoadingComponent } from '../../components'
+import { Divider, Header, LoadingComponent, Body, } from '../../components'
 import { AppRepository } from '../../repositories/AppRepository'
 import { PickerLocale } from 'antd/lib/date-picker/generatePicker'
 import { Badge } from 'antd'
 import localePT from 'antd/lib/locale/pt_PT'
 import { Dayjs } from 'dayjs'
 import {
-    Body, Calendar, Container
+    Calendar, Container
 } from './components/index'
 import './styles.css'
 import Colors from '../../utils/colors'
@@ -40,7 +40,7 @@ class CalendarScene extends Component<RouteComponentProps>{
     async componentDidMount() {
         const appointments = await this.appRepo.getAppointments()
 
-        if (appointments !== null && appointments.length > 0) {
+        if (appointments !== null) {
             this.setState({ isLoading: false })
         } else {
             this.props.history.replace('/login')
@@ -63,15 +63,14 @@ class CalendarScene extends Component<RouteComponentProps>{
 
     getListData = (value: Dayjs, appointments: Array<any>) => {
         let listData: BadgeMessage[] = [];
-        console.log('########################')
         appointments.map((ap) => {
-            console.log('date: ', value.date())
-            console.log('month: ', value.month())
-            console.log('year: ', value.year())
-            console.log('ap.date: ', ap.date.slice(0, 2))
-            console.log('ap.month: ', ap.date.slice(3, 5))
-            console.log('ap.year: ', ap.date.slice(6))
-            console.log('============')
+            // console.log('date: ', value.date())
+            // console.log('month: ', value.month())
+            // console.log('year: ', value.year())
+            // console.log('ap.date: ', ap.date.slice(0, 2))
+            // console.log('ap.month: ', ap.date.slice(3, 5))
+            // console.log('ap.year: ', ap.date.slice(6))
+            // console.log('============')
             if (value.date() == parseInt(ap.date.slice(0, 2)) && (value.month() + 1) == parseInt(ap.date.slice(3, 5))
                 && value.year() == parseInt(ap.date.slice(6))) {
                 listData = [
@@ -111,10 +110,10 @@ class CalendarScene extends Component<RouteComponentProps>{
         return (
             <>
                 <Header title='Calendario' />
-                <Container>
+                <Body>
                     <LoadingComponent show={isLoading} />
                     {!isLoading &&
-                        <Body>
+                    <>
                             <Calendar
                                 fullscreen={true}
                                 // headerRender={() => <div></div>}
@@ -176,9 +175,9 @@ class CalendarScene extends Component<RouteComponentProps>{
                                     </div>
                                 }
                             </div>
-                        </Body>
+                        </>
                     }
-                </Container>
+                </Body>
             </>
 
         )

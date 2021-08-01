@@ -70,25 +70,7 @@ class TabBarScene extends Component<RouteComponentProps> {
 
                 </CalendarScene>}
             </div>
-            <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: 56,
-                maxHeight: 56,
-                width: '100%',
-                backgroundColor: '#000',
-                padding: '0 16px',
-            }}>
-                <div></div>
-                <h1 style={{ color: '#fff', margin: 0 }}>{TabsTitles[tab]}</h1>
-                <a href='whatsapp://send?phone=5516991934303' style={{width: 32, height: 32}}><FaWhatsapp style={{ color: '#fff', fontSize: 32 }} /></a>
-
-            </div>
+             
             <BottomNavigation
                 value={tab}
                 showLabels

@@ -24,7 +24,7 @@ export const Body = styled.div`
     width: 100%;
     margin: 0 16px 0px 16px;
     padding: 32px 0 32px 0;
-    overflow-y: scroll;
+    overflow-y: hidden;
 `
 
 export const Calendar = generateCalendar<Dayjs>(dayjsGenerateConfig);

@@ -14,17 +14,6 @@ export const Container = styled.div`
     width: 100%;
 `
 
-export const Body = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    height: 100%;
-    margin: 0 16px 56px 16px;
-    padding: 32px 0 32px 0;
-    overflow-y: scroll;
-`
-
 export const ProgressHeader = styled.div`
     display: flex;
     flex-direction: row;

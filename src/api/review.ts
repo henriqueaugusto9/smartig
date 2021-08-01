@@ -51,7 +51,6 @@ class ReviewAPI {
             { headers: { Authorization: `Bearer ${token}` } }
         )
             .then((response) => {
-                console.log('review post', response.data)
                 return response.data
             })
             .catch((err) => {

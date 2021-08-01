@@ -14,7 +14,7 @@ export const CardComponent: React.FC<CardProps> = (props) => {
         bodyStyle={{
             display: 'flex',
             flexDirection: 'column',
-            padding: '2rem',
+            padding: '4px 16px',
             height: '100%'
         }}
         {...props}
