@@ -80,7 +80,6 @@ export class AppRepository extends Container<AppRepositoryState> {
                 return new Array()
             }
         }
-        console.log(user)
 
         let response = await AppointmentAPI.getAllAppointments(user._id, this.state.token!)
 
@@ -108,7 +107,6 @@ export class AppRepository extends Container<AppRepositoryState> {
                 }
             }
             let response = await ReviewAPI.getReview({ token: this.state.token! })
-            console.log('review response: ', response)
             if (response === null) {
                 return new Array()
             }
@@ -120,7 +118,7 @@ export class AppRepository extends Container<AppRepositoryState> {
     getProgress = async () => {
         const { token } = this.state
         if (token === null) {
-            const localToken = this.getLocalToken()
+            const localToken = await this.getLocalToken()
             if (localToken === null) {
                 return null
             }
@@ -136,7 +134,6 @@ export class AppRepository extends Container<AppRepositoryState> {
 
     setUser = async (user: any, token: string) => {
         localStorage.setItem('user', JSON.stringify(user))
-        console.log('setUser token: ', token)
         localStorage.setItem('token', token)
         await this.setState({ user, token })
     }
@@ -158,7 +155,7 @@ export class AppRepository extends Container<AppRepositoryState> {
         const token = localStorage.getItem('token');
         let response = await ConstructionAPI.getConstruction(token as string)
         if (response === null || response.length === 0) {
-            return EMPTY_CONSTRUCTION
+            return null
         }
         await this.setState({ construction: response[0] })
         return this.state.construction!
@@ -190,7 +187,6 @@ export class AppRepository extends Container<AppRepositoryState> {
             const localUser = localStorage.getItem('user');
             if (localUser != null) {
                 let userJson = JSON.parse(localUser)
-                console.log('user', userJson)
                 await this.setState({ user: userJson })
             } else {
                 return null

@@ -33,8 +33,14 @@ const TextFieldContainer = styled.div`
 export const InputRow = styled.div`
     display: flex;
     flex-direction: row;
+    align-items: center;
+    padding: 8px 0px;
+`
+
+export const InputColumn = styled.div`
+    display: flex;
+    flex-direction: column;
     align-items: flex-start;
-    padding: 8px 0;
 `
 
 export const Label = styled.span`

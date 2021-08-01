@@ -4,6 +4,7 @@ import { Add, ChevronLeft } from '@material-ui/icons'
 import Colors from '../utils/colors';
 import { useHistory } from 'react-router-dom';
 import { Tabs } from '../utils/tabs';
+import { FaWhatsapp } from 'react-icons/fa';
 
 export const Container = styled.div`
     position: absolute;
@@ -46,7 +47,10 @@ export const Header: React.FC<HeaderProps> = (
         goBackTo,
         onGoBack = () => { },
         title,
-        suffixComponent }
+        suffixComponent = <a href='whatsapp://send?phone=5516991934303' style={{ width: 32, height: 32 }}>
+            <FaWhatsapp style={{ color: '#fff', fontSize: 32 }} />
+            </a> 
+    }
 ) => {
 
     const history = useHistory()
@@ -72,21 +76,18 @@ export const Header: React.FC<HeaderProps> = (
                     tab = Tabs.CONSTRUCTION
                     break
             }
-            history.goBack()
             history.replace('home', { tab })
         } else {
             history.goBack()
         }
     }
-    
-    console.log('canGoBack: ', canGoBack)
 
     return <Container id="header" style={{ backgroundColor }}>
         {canGoBack && <ChevronLeft onClick={() => goBack()} style={{
             fontSize: '40px', fontWeight: 'bold', color: color,
         }} />}
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-            <HeaderTitle style={canGoBack && !suffixComponent ? { marginRight: '40px' } : suffixComponent ? { marginLeft: '40px' } : {}}>{title}</HeaderTitle>
+            <HeaderTitle style={canGoBack || !suffixComponent ? { marginRight: '40px' } : suffixComponent ? { marginLeft: '40px' } : {}}>{title}</HeaderTitle>
         </div>
         {suffixComponent != null && suffixComponent}
     </Container>

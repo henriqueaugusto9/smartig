@@ -8,6 +8,7 @@ import { AppRepository } from '../../repositories/AppRepository';
 import {
     Body, Container
 } from './components/index';
+import './styles.css'
 
 // type Progress = {
 //     title: string,
@@ -64,18 +65,18 @@ class FinancialScene extends Component<RouteComponentProps>{
     render() {
         const { isLoading, url } = this.state
 
-        const parsedUrl = url.replace('spreadsheets/d', 'spreadsheets/d/e')
-        .replace(/edit(.*)/, 'pubhtml?widget=true&amp;headers=false')
-
-        console.log(parsedUrl)
         return (
-            <>
+            <div style={{ width: '100%', height: '100%' }}>
+
+                <Header
+                    title={'Financeiro'}
+                />
                 <LoadingComponent show={isLoading} />
                 {!isLoading && <iframe
-                    src={parsedUrl}
-                    style={{ width: '100%', height: '100%', overflowY: 'hidden' }}
+                    src={url}
+                    style={{ marginTop: -16, width: '100%', height: '100%', overflowY: 'hidden' }}
                 />}
-            </>
+            </div>
 
         )
     }

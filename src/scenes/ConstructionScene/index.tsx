@@ -1,25 +1,19 @@
 
-import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons';
-import { Card } from 'antd';
 import { resolve } from 'inversify-react';
+import _ from 'lodash';
 import React, { Component } from 'react';
-import ReactLoading from 'react-loading';
 import { StaticContext, withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
 import {
-    CardComponent,
-    Divider,
-    InputRow,
-    Label,
+    Body, CardComponent, Header, InputColumn, InputRow, Label,
     LoadingComponent
 } from '../../components';
 import { EMPTY_CONSTRUCTION } from '../../model';
 import { AppRepository } from '../../repositories/AppRepository';
-import Colors from '../../utils/colors';
 import {
-    Body, ValueText, ValueLink
+    ValueText
 } from './components/';
-import _ from 'lodash'
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 type LocationState = {
     url: string
@@ -40,9 +34,10 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
 
 
         const constructions = await this.appRepo.getConstructionData()
-        if (constructions != null) {
+        if (constructions !== null) {
             this.setState({ isLoading: false, construction: constructions })
         } else {
+            this.appRepo.logout()
             this.props.history.replace('/login')
         }
     }
@@ -55,99 +50,102 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
         const { isLoading, construction, isCardOpen } = this.state
         return (
             <>
-
+                <Header
+                    title={'Dados da obra'}
+                />
                 <LoadingComponent show={isLoading} />
                 <Body style={{ padding: '16px 16px' }}>
 
 
 
-                    {!isLoading && <CardComponent
-                        style={{
-                            marginTop: '16px',
-                            width: '100%',
-                            borderRadius: '7px',
-                            boxShadow: "5px 4px 2px 0.5px rgba(208, 216, 243, 0.6)",
-                        }}
-                        bodyStyle={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            padding: '16px 16px 16px 16px',
-                            height: '100%'
-                        }}
-                    >
-                        <InputRow>
+                    {!isLoading && <><CardComponent>
+                        <InputColumn>
                             <Label>
                                 Endereço:
                             </Label>
                             <ValueText>{_.get(construction, 'endereco')}</ValueText>
-                        </InputRow>
+                        </InputColumn>
+                    </CardComponent>
+                        <CardComponent>
+                            <InputColumn>
+                                <Label>
+                                    Lote:
+                                </Label>
+                                <ValueText>{_.get(construction, 'lote')}</ValueText>
+                            </InputColumn>
 
-                        <InputRow>
-                            <Label>
-                                Lote:
-                            </Label>
-                            <ValueText>{_.get(construction, 'lote')}</ValueText>
-                        </InputRow>
+                        </CardComponent>
+                        <CardComponent>
+                            <InputColumn>
+                                <Label>
+                                    Quadra:
+                                </Label>
+                                <ValueText>{_.get(construction, 'quadra')}</ValueText>
+                            </InputColumn>
 
-                        <InputRow>
-                            <Label>
-                                Quadra:
-                            </Label>
-                            <ValueText>{_.get(construction, 'quadra')}</ValueText>
-                        </InputRow>
-                        <InputRow>
-                            <Label>
-                                Proprietário:
-                            </Label>
-                            <ValueText>{_.get(construction, 'proprietario')}</ValueText>
-                        </InputRow>
-                        <InputRow>
-                            <Label>
-                                Início Contrato:
-                            </Label>
-                            <ValueText>{_.get(construction, 'inicioContrato')}</ValueText>
-                        </InputRow>
+                        </CardComponent>
+                        <CardComponent>
+                            <InputColumn>
+                                <Label>
+                                    Proprietário:
+                                </Label>
+                                <ValueText>{_.get(construction, 'proprietario')}</ValueText>
+                            </InputColumn>
 
-                        {isCardOpen && <><Divider />
-                            <Label style={{ fontSize: '16px' }}>ANEXOS</Label>
+                        </CardComponent>
+                        <CardComponent>
+                            <InputColumn>
+                                <Label>
+                                    Início Contrato:
+                                </Label>
+                                <ValueText>{_.get(construction, 'inicioContrato')}</ValueText>
+                            </InputColumn>
 
-                            <InputRow>
+                        </CardComponent>
+
+                        {_.get(construction, 'docs.ART') !== '' && 
+                        <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.ART'))}>
+                            <InputRow style={{ justifyContent: 'space-between' }}>
                                 <Label>Art: </Label>
-                                <ValueLink onClick={() => this.openPdfLink(_.get(construction, 'docs.ART'))}>
-                                    {_.get(construction, 'docs.ART')}
-                                </ValueLink>
+                                <ArrowForwardIcon />
                             </InputRow>
-                            <InputRow>
+
+                        </CardComponent>
+                        }{_.get(construction, 'docs.matricula') !== '' &&
+                         <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.matricula'))}>
+                            <InputRow style={{ justifyContent: 'space-between' }}>
                                 <Label>Matrícula: </Label>
-                                <ValueLink onClick={() => this.openPdfLink(_.get(construction, 'docs.matricula'))}>
-                                    {_.get(construction, 'docs.matricula')}
-                                </ValueLink>
+                                <ArrowForwardIcon />
                             </InputRow>
-                            <InputRow>
+
+                        </CardComponent>
+                        }{_.get(construction, 'docs.relContribuinte') !== '' && 
+                        <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.relContribuinte'))}>
+                            <InputRow style={{ justifyContent: 'space-between' }}>
                                 <Label>Rel Contribuinte: </Label>
-                                <ValueLink onClick={() => this.openPdfLink(_.get(construction, 'docs.relContribuinte'))}>
-                                    {_.get(construction, 'docs.relContribuinte')}
-                                </ValueLink>
+                                <ArrowForwardIcon />
                             </InputRow>
-                            <InputRow>
+
+                        </CardComponent>
+                        }
+                        {_.get(construction, 'docs.alana') !== '' && 
+                        <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.alana'))}>
+                            <InputRow style={{ justifyContent: 'space-between' }}>
                                 <Label>Alana </Label>
-                                <ValueLink onClick={() => this.openPdfLink(_.get(construction, 'docs.alana'))}>
-                                    {_.get(construction, 'docs.alana')}
-                                </ValueLink>
+                                <ArrowForwardIcon />
                             </InputRow>
-                            <InputRow>
+
+                        </CardComponent>
+                        }
+                        { _.get(construction, 'docs.habiteSe') !== '' && 
+                        <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.habiteSe'))}>
+                            <InputRow style={{ justifyContent: 'space-between' }}>
                                 <Label>Habite-se: </Label>
-                                <ValueLink onClick={() => this.openPdfLink(_.get(construction, 'docs.habiteSe'))}>
-                                    {_.get(construction, 'docs.habiteSe')}
-                                </ValueLink>
+                                <ArrowForwardIcon />
                             </InputRow>
-                        </>}
-                        <InputRow style={{ justifyContent: 'center', padding: 0, marginBottom: '-16px' }}>
-                            <div onClick={() => this.setState({ isCardOpen: !isCardOpen })}>
-                                {isCardOpen ? <KeyboardArrowUp style={{ fontSize: 32 }} /> : <KeyboardArrowDown style={{ fontSize: 32 }} />}
-                            </div>
-                        </InputRow>
-                    </CardComponent>}
+                        </CardComponent>
+                        }
+                    </>}
                 </Body>
             </>
         )

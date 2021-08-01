@@ -1,15 +1,12 @@
 
+import { LinearProgress } from '@material-ui/core';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { resolve } from 'inversify-react';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
-import { CardComponent, Header, Label, LoadingComponent } from '../../components';
-import { LinearProgress } from '@material-ui/core';
+import { Body, CardComponent, Header, InputRow, Label, LoadingComponent } from '../../components';
 import { AppRepository } from '../../repositories/AppRepository';
-import {
-    Body, Container
-} from './components/index';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 
 const EMPTY_PROGRESS_TYPE = {
@@ -61,9 +58,8 @@ class ProgressScene extends Component<RouteComponentProps>{
                     onGoBack={() => this.setState({ currentlyOpenProgressType: { isOpen: false, progressType: EMPTY_PROGRESS_TYPE } })}
                     title={currentlyOpenProgressType.isOpen ? currentlyOpenProgressType.progressType.title : 'Progresso'}
                 />
-                <Container>
+                <Body>
                     <LoadingComponent show={isLoading} />
-                    <Body style={{ padding: '3rem 2rem', margin: '4px 0' }}>
                         {(!isLoading && !currentlyOpenProgressType.isOpen) && progress &&
                             progress.progressTypes && progress.progressTypes.length > 0 &&
                             progress.progressTypes.map((progressType: any, index) => (
@@ -71,17 +67,12 @@ class ProgressScene extends Component<RouteComponentProps>{
                                     key={index}
                                     onClick={this.openProgressType(progressType._id)}
                                 >
-                                    <div style={{
-                                        display: 'flex',
-                                        justifyContent: 'space-between',
-                                        alignItems: 'center',
-                                        width: '100%'
-                                    }}>
+                                    <InputRow style={{justifyContent: 'space-between'}}>
                                         <span style={{
                                             fontSize: 22
                                         }}>{progressType.title}</span>
                                         <ArrowForwardIcon />
-                                    </div>
+                                    </InputRow>
                                 </CardComponent>
                             ))}
                         {(!isLoading && currentlyOpenProgressType.isOpen) && currentlyOpenProgressType.progressType &&
@@ -109,8 +100,7 @@ class ProgressScene extends Component<RouteComponentProps>{
                                     </div>
                                 </CardComponent>
                             ))}
-                    </Body>
-                </Container>
+                </Body>
             </>
 
         )
