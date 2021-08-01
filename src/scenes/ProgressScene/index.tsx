@@ -36,11 +36,9 @@ class ProgressScene extends Component<RouteComponentProps>{
 
     async componentDidMount() {
         const progress = await this.appRepo.getProgress()
-        if (progress !== null) {
-            this.setState({ isLoading: false, progress })
-        } else {
-            this.props.history.replace('/login')
-        }
+
+        this.setState({ isLoading: false, progress })
+
     }
 
     openProgressType = (progressTypeId: string) => () => {

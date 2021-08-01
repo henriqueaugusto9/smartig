@@ -75,12 +75,6 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
                             height: '100%'
                         }}
                     >
-
-                        <InputRow style={{ justifyContent: 'flex-end', padding: 0, marginBottom: '-16px' }}>
-                            <div onClick={() => this.setState({ isCardOpen: !isCardOpen })}>
-                                {isCardOpen ? <KeyboardArrowUp style={{ fontSize: 32 }} /> : <KeyboardArrowDown style={{ fontSize: 32 }} />}
-                            </div>
-                        </InputRow>
                         <InputRow>
                             <Label>
                                 Endereço:
@@ -148,6 +142,11 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
                                 </ValueLink>
                             </InputRow>
                         </>}
+                        <InputRow style={{ justifyContent: 'center', padding: 0, marginBottom: '-16px' }}>
+                            <div onClick={() => this.setState({ isCardOpen: !isCardOpen })}>
+                                {isCardOpen ? <KeyboardArrowUp style={{ fontSize: 32 }} /> : <KeyboardArrowDown style={{ fontSize: 32 }} />}
+                            </div>
+                        </InputRow>
                     </CardComponent>}
                 </Body>
             </>
