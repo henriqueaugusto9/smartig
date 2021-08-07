@@ -53,11 +53,9 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
                 <Header
                     title={'Dados da obra'}
                 />
-                <LoadingComponent show={isLoading} />
                 <Body style={{ padding: '16px 16px' }}>
 
-
-
+                    <LoadingComponent show={isLoading} />
                     {!isLoading && <><CardComponent>
                         <InputColumn>
                             <Label>
@@ -103,47 +101,47 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
 
                         </CardComponent>
 
-                        {_.get(construction, 'docs.ART') !== '' && 
-                        <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.ART'))}>
-                            <InputRow style={{ justifyContent: 'space-between' }}>
-                                <Label>Art: </Label>
-                                <ArrowForwardIcon />
-                            </InputRow>
+                        {_.get(construction, 'docs.ART') !== '' &&
+                            <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.ART'))}>
+                                <InputRow style={{ justifyContent: 'space-between' }}>
+                                    <Label>Art: </Label>
+                                    <ArrowForwardIcon />
+                                </InputRow>
 
-                        </CardComponent>
+                            </CardComponent>
                         }{_.get(construction, 'docs.matricula') !== '' &&
-                         <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.matricula'))}>
-                            <InputRow style={{ justifyContent: 'space-between' }}>
-                                <Label>Matrícula: </Label>
-                                <ArrowForwardIcon />
-                            </InputRow>
+                            <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.matricula'))}>
+                                <InputRow style={{ justifyContent: 'space-between' }}>
+                                    <Label>Matrícula: </Label>
+                                    <ArrowForwardIcon />
+                                </InputRow>
 
-                        </CardComponent>
-                        }{_.get(construction, 'docs.relContribuinte') !== '' && 
-                        <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.relContribuinte'))}>
-                            <InputRow style={{ justifyContent: 'space-between' }}>
-                                <Label>Rel Contribuinte: </Label>
-                                <ArrowForwardIcon />
-                            </InputRow>
+                            </CardComponent>
+                        }{_.get(construction, 'docs.relContribuinte') !== '' &&
+                            <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.relContribuinte'))}>
+                                <InputRow style={{ justifyContent: 'space-between' }}>
+                                    <Label>Rel Contribuinte: </Label>
+                                    <ArrowForwardIcon />
+                                </InputRow>
 
-                        </CardComponent>
+                            </CardComponent>
                         }
-                        {_.get(construction, 'docs.alana') !== '' && 
-                        <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.alana'))}>
-                            <InputRow style={{ justifyContent: 'space-between' }}>
-                                <Label>Alana </Label>
-                                <ArrowForwardIcon />
-                            </InputRow>
+                        {_.get(construction, 'docs.alana') !== '' &&
+                            <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.alana'))}>
+                                <InputRow style={{ justifyContent: 'space-between' }}>
+                                    <Label>Alana </Label>
+                                    <ArrowForwardIcon />
+                                </InputRow>
 
-                        </CardComponent>
+                            </CardComponent>
                         }
-                        { _.get(construction, 'docs.habiteSe') !== '' && 
-                        <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.habiteSe'))}>
-                            <InputRow style={{ justifyContent: 'space-between' }}>
-                                <Label>Habite-se: </Label>
-                                <ArrowForwardIcon />
-                            </InputRow>
-                        </CardComponent>
+                        {_.get(construction, 'docs.habiteSe') !== '' &&
+                            <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.habiteSe'))}>
+                                <InputRow style={{ justifyContent: 'space-between' }}>
+                                    <Label>Habite-se: </Label>
+                                    <ArrowForwardIcon />
+                                </InputRow>
+                            </CardComponent>
                         }
                     </>}
                 </Body>

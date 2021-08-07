@@ -47,7 +47,7 @@ export const Header: React.FC<HeaderProps> = (
         goBackTo,
         onGoBack = () => { },
         title,
-        suffixComponent = <a href='whatsapp://send?phone=5516991934303' style={{ width: 32, height: 32 }}>
+        suffixComponent = <a href='whatsapp://send?phone=5516991387091' style={{ width: 32, height: 32 }}>
             <FaWhatsapp style={{ color: '#fff', fontSize: 32 }} />
             </a> 
     }
