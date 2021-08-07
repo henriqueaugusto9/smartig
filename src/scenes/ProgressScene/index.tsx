@@ -22,7 +22,6 @@ class ProgressScene extends Component<RouteComponentProps>{
     state = {
         isLoading: true,
         progress: {
-            totalPercentage: 0,
             progressTypes: new Array<any>()
         },
         currentlyOpenProgressType: {
@@ -60,46 +59,57 @@ class ProgressScene extends Component<RouteComponentProps>{
                 />
                 <Body>
                     <LoadingComponent show={isLoading} />
-                        {(!isLoading && !currentlyOpenProgressType.isOpen) && progress &&
-                            progress.progressTypes && progress.progressTypes.length > 0 &&
-                            progress.progressTypes.map((progressType: any, index) => (
-                                <CardComponent
-                                    key={index}
-                                    onClick={this.openProgressType(progressType._id)}
-                                >
-                                    <InputRow style={{justifyContent: 'space-between'}}>
-                                        <span style={{
-                                            fontSize: 22
-                                        }}>{progressType.title}</span>
-                                        <ArrowForwardIcon />
-                                    </InputRow>
-                                </CardComponent>
-                            ))}
-                        {(!isLoading && currentlyOpenProgressType.isOpen) && currentlyOpenProgressType.progressType &&
-                            currentlyOpenProgressType.progressType.indexes.length > 0 &&
-                            currentlyOpenProgressType.progressType.indexes.map((index: any, i) => (
-                                <CardComponent key={i}>
+                    {(!isLoading && !currentlyOpenProgressType.isOpen) && progress?.progressTypes?.length === 0 &&
+                        <div>
+                            <h2>Vazio</h2>
+                        </div>}
+                    {(!isLoading && !currentlyOpenProgressType.isOpen) && progress &&
+                        progress.progressTypes && progress.progressTypes.length > 0 &&
+                        progress.progressTypes.map((progressType: any, index) => (
+                            <CardComponent
+                                key={index}
+                                onClick={this.openProgressType(progressType._id)}
+                            >
+                                <InputRow style={{ justifyContent: 'space-between' }}>
+                                    <span style={{
+                                        fontSize: 22
+                                    }}>{progressType.title}</span>
+                                    <ArrowForwardIcon />
+                                </InputRow>
+                                <div>
+                                    <LinearProgress variant="determinate" value={progressType.totalPercentage} />
+                                    <span>{`${Math.round(
+                                        progressType.totalPercentage,
+                                    )}%`}
+                                    </span>
+                                </div>
+                            </CardComponent>
+                        ))}
+                    {(!isLoading && currentlyOpenProgressType.isOpen) && currentlyOpenProgressType.progressType &&
+                        currentlyOpenProgressType.progressType.indexes.length > 0 &&
+                        currentlyOpenProgressType.progressType.indexes.map((index: any, i) => (
+                            <CardComponent key={i}>
 
-                                    <h2 style={{
-                                        textAlign: 'center'
-                                    }}>
-                                        {index.title}
-                                    </h2>
-                                    <div>
-                                        <LinearProgress variant="determinate" value={index.percentage} />
-                                        <span>{`${Math.round(
-                                            index.percentage,
-                                        )}%`}
-                                        </span>
-                                    </div>
-                                    <div style={{
-                                        marginTop: '1rem'
-                                    }}>
-                                        <Label>Comentários</Label>
-                                        <p style={{ fontSize: '1rem', marginLeft: '0.5rem' }}>{index.description}</p>
-                                    </div>
-                                </CardComponent>
-                            ))}
+                                <h2 style={{
+                                    textAlign: 'center'
+                                }}>
+                                    {index.title}
+                                </h2>
+                                <div>
+                                    <LinearProgress variant="determinate" value={index.percentage} />
+                                    <span>{`${Math.round(
+                                        index.percentage,
+                                    )}%`}
+                                    </span>
+                                </div>
+                                <div style={{
+                                    marginTop: '1rem'
+                                }}>
+                                    <Label style={{ fontSize: '1rem' }}>Comentários</Label>
+                                    <p style={{ fontSize: '1rem' }}>{index.description}</p>
+                                </div>
+                            </CardComponent>
+                        ))}
                 </Body>
             </>
 

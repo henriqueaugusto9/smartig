@@ -6,7 +6,8 @@ import { StaticContext, withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
 import {
     Body, CardComponent, Header, InputColumn, InputRow, Label,
-    LoadingComponent
+    LoadingComponent,
+    SubmitButton
 } from '../../components';
 import { EMPTY_CONSTRUCTION } from '../../model';
 import { AppRepository } from '../../repositories/AppRepository';
@@ -144,6 +145,16 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
                             </CardComponent>
                         }
                     </>}
+
+                    <SubmitButton 
+                    style={{ marginTop: 64 }}
+                    onClick={() => {
+                        this.appRepo.logout()
+                        this.props.history.replace('/login')
+                    }}
+                    >
+                        Logout
+                    </SubmitButton>
                 </Body>
             </>
         )

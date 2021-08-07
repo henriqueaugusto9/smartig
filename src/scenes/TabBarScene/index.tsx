@@ -42,11 +42,6 @@ class TabBarScene extends Component<RouteComponentProps> {
         this.setState({ anchor: null })
     }
 
-    handleLogout = () => {
-        this.appRepo.logout()
-        this.props.history.replace('/login')
-    }
-
 
     render() {
         const tab = this.appRepo.tab!
