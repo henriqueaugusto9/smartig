@@ -13,6 +13,7 @@ import LoginScene from './scenes/LoginScene'
 import HomeScene from './scenes/ProgressScene'
 import TabBarScene from './scenes/TabBarScene'
 import { WebViewScene } from './scenes/WebViewScene';
+import SubscriptionExpired from './services/SubscriptionExpired';
 
 class App extends Component {
 
@@ -21,6 +22,7 @@ class App extends Component {
     }
 
     componentDidMount() {
+        SubscriptionExpired.setIsExpired(false)
         const token = localStorage.getItem('token')
         if (token !== null) {
             this.setState({ redirectTo: '/home' })

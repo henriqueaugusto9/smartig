@@ -7,6 +7,7 @@ import { withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
 import { Body, CardComponent, Header, InputRow, Label, LoadingComponent } from '../../components';
 import { AppRepository } from '../../repositories/AppRepository';
+import SubscriptionExpired from '../../services/SubscriptionExpired';
 
 
 const EMPTY_PROGRESS_TYPE = {
@@ -59,7 +60,9 @@ class ProgressScene extends Component<RouteComponentProps>{
                 />
                 <Body>
                     <LoadingComponent show={isLoading} />
-                    {(!isLoading && !currentlyOpenProgressType.isOpen) && progress?.progressTypes?.length === 0 &&
+                    
+                    <SubscriptionExpired.Component />
+                    {(!isLoading && !SubscriptionExpired.isExpired()&& !currentlyOpenProgressType.isOpen) && progress?.progressTypes?.length === 0 &&
                         <div>
                             <h2>Vazio</h2>
                         </div>}

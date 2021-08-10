@@ -13,6 +13,7 @@ import ConstructionScene from '../ConstructionScene';
 import FinancialScene from '../FinancialScene';
 import ProgressScene from '../ProgressScene';
 import { FaWhatsapp } from "react-icons/fa";
+import SubscriptionExpired from '../../services/SubscriptionExpired';
 
 const windowHeight = window.innerHeight
 
@@ -25,7 +26,7 @@ class TabBarScene extends Component<RouteComponentProps> {
 
     @resolve(AppRepository) private appRepo!: AppRepository
 
-    componentDidMount(){
+    componentDidMount() {
         this.appRepo.getUser()
     }
 
@@ -64,8 +65,9 @@ class TabBarScene extends Component<RouteComponentProps> {
                 {tab === Tabs.CALENDAR && <CalendarScene>
 
                 </CalendarScene>}
+
             </div>
-             
+
             <BottomNavigation
                 value={tab}
                 showLabels

@@ -14,6 +14,7 @@ import {
 } from './components/index'
 import './styles.css'
 import Colors from '../../utils/colors'
+import SubscriptionExpired from '../../services/SubscriptionExpired'
 
 // type Progress = {
 //     title: string,
@@ -111,8 +112,9 @@ class CalendarScene extends Component<RouteComponentProps>{
             <>
                 <Header title='Calendario' />
                 <Body>
-                    <LoadingComponent show={isLoading} />
-                    {!isLoading &&
+                    <LoadingComponent show={isLoading} /> 
+                    <SubscriptionExpired.Component />
+                    {(!isLoading && !SubscriptionExpired.isExpired()) &&
                     <>
                             <Calendar
                                 fullscreen={true}

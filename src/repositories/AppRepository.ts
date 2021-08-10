@@ -10,6 +10,7 @@ import ProfileAPI from '../api/profile';
 import ProgressAPI from '../api/progress';
 import ReviewAPI from '../api/review';
 import { EMPTY_CONSTRUCTION } from '../model';
+import SubscriptionExpired from '../services/SubscriptionExpired';
 import { Tabs } from '../utils/tabs';
 
 const browser = detect()
@@ -21,6 +22,7 @@ type AppRepositoryState = {
     reviews: Array<any> | null,
     token: string | null,
     construction: any,
+    isExpired: boolean,
     finance: any,
     tab: Tabs,
 }
@@ -39,6 +41,7 @@ export class AppRepository extends Container<AppRepositoryState> {
         progress: null,
         reviews: null,
         finance: null,
+        isExpired: false,
         construction: EMPTY_CONSTRUCTION,
         tab: Tabs.CONSTRUCTION,
     }
@@ -140,6 +143,7 @@ export class AppRepository extends Container<AppRepositoryState> {
 
     logout = async () => {
         localStorage.clear()
+        SubscriptionExpired.setIsExpired(false)
         await this.setState({
             user: null,
             token: null,
@@ -157,6 +161,11 @@ export class AppRepository extends Container<AppRepositoryState> {
         if (response === null || response.length === 0) {
             return null
         }
+        // if (response.isExpired) {
+        //     console.log('expired: ', response)
+        //     await this.setState({ isExpired: true })
+        //     return null
+        // }
         await this.setState({ construction: response[0] })
         return this.state.construction!
     }
@@ -164,7 +173,7 @@ export class AppRepository extends Container<AppRepositoryState> {
     getFinance = async () => {
         const token = localStorage.getItem('token');
         let response = await FinanceAPI.getFinance(token as string)
-        if (response === null && response.length === 0) {
+        if (response === null || response.length === 0) {
             return { link: '' }
         }
         await this.setState({ finance: response[0] })

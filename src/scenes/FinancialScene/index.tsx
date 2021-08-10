@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
 import { Header, LoadingComponent } from '../../components';
 import { AppRepository } from '../../repositories/AppRepository';
+import SubscriptionExpired from '../../services/SubscriptionExpired';
 import {
     Body, Container
 } from './components/index';
@@ -72,7 +73,10 @@ class FinancialScene extends Component<RouteComponentProps>{
                     title={'Financeiro'}
                 />
                 <LoadingComponent show={isLoading} />
-                {!isLoading && <iframe
+                {SubscriptionExpired.isExpired() && <div style={{ padding: 16 }}>
+                    <SubscriptionExpired.Component />
+                </div>}
+                {(!isLoading && !SubscriptionExpired.isExpired()) && <iframe
                     src={url}
                     style={{ marginTop: -16, width: '100%', height: '100%', overflowY: 'hidden' }}
                 />}

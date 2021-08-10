@@ -15,6 +15,7 @@ import {
     ValueText
 } from './components/';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import SubscriptionExpired from '../../services/SubscriptionExpired';
 
 type LocationState = {
     url: string
@@ -57,7 +58,9 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
                 <Body style={{ padding: '16px 16px' }}>
 
                     <LoadingComponent show={isLoading} />
-                    {!isLoading && <><CardComponent>
+
+                    <SubscriptionExpired.Component />
+                    {(!isLoading && !SubscriptionExpired.isExpired()) && <><CardComponent>
                         <InputColumn>
                             <Label>
                                 Endereço:
@@ -130,7 +133,7 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
                         {_.get(construction, 'docs.alana') !== '' &&
                             <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.alana'))}>
                                 <InputRow style={{ justifyContent: 'space-between' }}>
-                                    <Label>Alana </Label>
+                                    <Label>Alvara </Label>
                                     <ArrowForwardIcon />
                                 </InputRow>
 
@@ -146,15 +149,16 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
                         }
                     </>}
 
-                    <SubmitButton 
-                    style={{ marginTop: 64 }}
-                    onClick={() => {
-                        this.appRepo.logout()
-                        this.props.history.replace('/login')
-                    }}
+                    <SubmitButton
+                        style={{ marginTop: 64 }}
+                        onClick={() => {
+                            this.appRepo.logout()
+                            this.props.history.replace('/login')
+                        }}
                     >
                         Logout
                     </SubmitButton>
+                    
                 </Body>
             </>
         )

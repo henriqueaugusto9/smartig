@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios'
+import SubscriptionExpired from '../services/SubscriptionExpired'
 import client from './config'
 
 class ConstructionAPI {
@@ -7,8 +9,12 @@ class ConstructionAPI {
             .then((response) => {
                 return response.data.construction
             })
-            .catch((err) => {
-                console.log(err)
+            .catch((err: AxiosError) => {
+                console.error(err)
+                if (err?.response?.status === 403) {
+                    SubscriptionExpired.setIsExpired(true)
+                    return [{}]
+                }
                 return null
             })
     }
