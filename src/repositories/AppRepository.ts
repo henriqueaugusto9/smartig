@@ -25,6 +25,7 @@ type AppRepositoryState = {
     isExpired: boolean,
     finance: any,
     tab: Tabs,
+    images: Array<any>
 }
 
 type GetReviewsParams = {
@@ -42,6 +43,7 @@ export class AppRepository extends Container<AppRepositoryState> {
         reviews: null,
         finance: null,
         isExpired: false,
+        images: new Array(),
         construction: EMPTY_CONSTRUCTION,
         tab: Tabs.CONSTRUCTION,
     }
@@ -66,6 +68,13 @@ export class AppRepository extends Container<AppRepositoryState> {
         return this.state.user
     }
 
+    get images() {
+        return this.state.images
+    }
+
+    setImages = async (images: Array<any>) => {
+        await this.setState({ images })
+    }
 
     setTab = async (tab: Tabs) => {
         // if (tab == Tabs.HOME) {

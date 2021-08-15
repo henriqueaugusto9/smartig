@@ -8,6 +8,7 @@ export type Construction = {
     owner: string,
     proprietario: string,
     quadra: string,
+    images: Array<any>,
     _id: string
 }
 
@@ -19,5 +20,6 @@ export const EMPTY_CONSTRUCTION = {
     owner: '',
     proprietario: '',
     quadra: '',
+    images: [],
     _id: ''
 } as Construction

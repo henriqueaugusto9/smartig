@@ -14,6 +14,7 @@ import HomeScene from './scenes/ProgressScene'
 import TabBarScene from './scenes/TabBarScene'
 import { WebViewScene } from './scenes/WebViewScene';
 import SubscriptionExpired from './services/SubscriptionExpired';
+import ImagesScene from './scenes/ImagesScene';
 
 class App extends Component {
 
@@ -40,6 +41,7 @@ class App extends Component {
                             <Route exact path='/login' component={LoginScene} />
                             <Route exact path='/showPdf/' component={WebViewScene} />
                             <Route exact path='/showSheets/' component={WebViewScene} />
+                            <Route exact path='/images/' component={ImagesScene} />
                         </Switch>
                     </Router>
                 </UnstatedProvider>

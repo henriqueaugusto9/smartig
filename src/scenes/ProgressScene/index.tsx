@@ -5,7 +5,7 @@ import { resolve } from 'inversify-react';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router-dom';
-import { Body, CardComponent, Header, InputRow, Label, LoadingComponent } from '../../components';
+import { Body, CardComponent, Header, InputRow, Label, LoadingComponent, SubmitButton } from '../../components';
 import { AppRepository } from '../../repositories/AppRepository';
 import SubscriptionExpired from '../../services/SubscriptionExpired';
 
@@ -60,9 +60,9 @@ class ProgressScene extends Component<RouteComponentProps>{
                 />
                 <Body>
                     <LoadingComponent show={isLoading} />
-                    
+
                     <SubscriptionExpired.Component />
-                    {(!isLoading && !SubscriptionExpired.isExpired()&& !currentlyOpenProgressType.isOpen) && progress?.progressTypes?.length === 0 &&
+                    {(!isLoading && !SubscriptionExpired.isExpired() && !currentlyOpenProgressType.isOpen) && progress?.progressTypes?.length === 0 &&
                         <div>
                             <h2>Vazio</h2>
                         </div>}
@@ -92,7 +92,6 @@ class ProgressScene extends Component<RouteComponentProps>{
                         currentlyOpenProgressType.progressType.indexes.length > 0 &&
                         currentlyOpenProgressType.progressType.indexes.map((index: any, i) => (
                             <CardComponent key={i}>
-
                                 <h2 style={{
                                     textAlign: 'center'
                                 }}>
@@ -111,6 +110,14 @@ class ProgressScene extends Component<RouteComponentProps>{
                                     <Label style={{ fontSize: '1rem' }}>Comentários</Label>
                                     <p style={{ fontSize: '1rem' }}>{index.description}</p>
                                 </div>
+                                {index.images?.length > 0 && <SubmitButton
+                                    onClick={async () => {
+                                        await this.appRepo.setImages(index.images)
+                                        this.props.history.push('/images')
+                                    }}
+                                >
+                                    Fotos
+                                </SubmitButton>}
                             </CardComponent>
                         ))}
                 </Body>

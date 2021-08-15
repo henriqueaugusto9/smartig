@@ -18,7 +18,8 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import SubscriptionExpired from '../../services/SubscriptionExpired';
 
 type LocationState = {
-    url: string
+    url?: string,
+    images?: Array<any>
 }
 
 class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext, LocationState>>{
@@ -29,7 +30,6 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
         isLoading: true,
         id: '',
         construction: EMPTY_CONSTRUCTION,
-        isCardOpen: false
     }
 
     async componentDidMount() {
@@ -49,7 +49,7 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
     }
 
     render() {
-        const { isLoading, construction, isCardOpen } = this.state
+        const { isLoading, construction } = this.state
         return (
             <>
                 <Header
@@ -133,7 +133,7 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
                         {_.get(construction, 'docs.alana') !== '' &&
                             <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.alana'))}>
                                 <InputRow style={{ justifyContent: 'space-between' }}>
-                                    <Label>Alvara </Label>
+                                    <Label>Alvara: </Label>
                                     <ArrowForwardIcon />
                                 </InputRow>
 
@@ -143,6 +143,19 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
                             <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.habiteSe'))}>
                                 <InputRow style={{ justifyContent: 'space-between' }}>
                                     <Label>Habite-se: </Label>
+                                    <ArrowForwardIcon />
+                                </InputRow>
+                            </CardComponent>
+                        }
+                        {
+                            construction.images?.length > 0 &&
+                            <CardComponent onClick={async () => {
+                                await this.appRepo.setImages(construction.images)
+                                this.props.history.push('/images')
+                            }}
+                            >
+                                <InputRow style={{ justifyContent: 'space-between' }}>
+                                    <Label>Imagens: </Label>
                                     <ArrowForwardIcon />
                                 </InputRow>
                             </CardComponent>
@@ -158,7 +171,7 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
                     >
                         Logout
                     </SubmitButton>
-                    
+
                 </Body>
             </>
         )
