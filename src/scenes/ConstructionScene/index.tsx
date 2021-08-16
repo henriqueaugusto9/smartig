@@ -45,7 +45,8 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
     }
 
     openPdfLink = (url: string) => {
-        this.props.history.push({ pathname: `/showPdf/`, state: { url: url } })
+        window.open(url, "_self");
+        // this.props.history.push({ pathname: `/showPdf/`, state: { url: url } })
     }
 
     render() {

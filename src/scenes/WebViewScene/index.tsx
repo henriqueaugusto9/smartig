@@ -16,7 +16,7 @@ export const WebViewScene: React.FC<RouteComponentProps<WebViewSceneRouteParams>
         <iframe
             src={state.url}
             style={{ position: 'absolute', top: 72, width: '100%', height: '100%', overflowY: 'hidden' }}
-        />
+        /> 
 
     </>
 
