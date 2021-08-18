@@ -5,6 +5,9 @@ import Colors from '../utils/colors';
 import { useHistory } from 'react-router-dom';
 import { Tabs } from '../utils/tabs';
 import { FaWhatsapp } from 'react-icons/fa';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
+import { useInjection } from 'inversify-react';
+import { AppRepository } from '../repositories/AppRepository';
 
 export const Container = styled.div`
     position: absolute;
@@ -37,7 +40,7 @@ interface HeaderProps {
     onGoBack?: () => void
     color?: string
     title: string
-    suffixComponent?: JSX.Element
+    suffixComponent?: JSX.Element,
 }
 
 export const Header: React.FC<HeaderProps> = (
@@ -47,13 +50,12 @@ export const Header: React.FC<HeaderProps> = (
         goBackTo,
         onGoBack = () => { },
         title,
-        suffixComponent = <a href='whatsapp://send?phone=5516991387091' style={{ width: 32, height: 32 }}>
-            <FaWhatsapp style={{ color: '#fff', fontSize: 32 }} />
-            </a> 
+        suffixComponent
     }
 ) => {
 
     const history = useHistory()
+    const appRepo = useInjection(AppRepository)
 
     const goBack = () => {
         onGoBack()
@@ -86,10 +88,18 @@ export const Header: React.FC<HeaderProps> = (
         {canGoBack && <ChevronLeft onClick={() => goBack()} style={{
             fontSize: '40px', fontWeight: 'bold', color: color,
         }} />}
-        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-            <HeaderTitle style={canGoBack || !suffixComponent ? { marginRight: '40px' } : suffixComponent ? { marginLeft: '40px' } : {}}>{title}</HeaderTitle>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'left' }}>
+            <HeaderTitle style={canGoBack || !suffixComponent ? { marginRight: '40px' } : suffixComponent ? { marginLeft: 0 } : {}}>{title}</HeaderTitle>
         </div>
-        {suffixComponent != null && suffixComponent}
+        {suffixComponent ?? <div style={{ display: 'flex' }}>
+            {appRepo.cityHall && <AccountBalanceIcon style={{ color: '#fff', fontSize: 32, marginRight: 16 }} onClick={() => {
+                window.open(appRepo.cityHall!);
+            }} />
+            }
+            <a href='whatsapp://send?phone=5516991387091' style={{ width: 32, height: 32 }}>
+                <FaWhatsapp style={{ color: '#fff', fontSize: 32 }} />
+            </a>
+        </div>}
     </Container>
 }
 

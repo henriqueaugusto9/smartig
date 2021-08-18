@@ -7,7 +7,7 @@ class ConstructionAPI {
     static getConstruction = async (token: string) => {
         return await client.get(`construction/`, { headers: { Authorization: `Bearer ${token}` } })
             .then((response) => {
-                return response.data.construction
+                return response.data
             })
             .catch((err: AxiosError) => {
                 console.error(err)

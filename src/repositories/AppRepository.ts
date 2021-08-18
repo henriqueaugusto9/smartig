@@ -25,6 +25,7 @@ type AppRepositoryState = {
     isExpired: boolean,
     finance: any,
     tab: Tabs,
+    cityHall: string | null,
     images: Array<any>
 }
 
@@ -43,6 +44,7 @@ export class AppRepository extends Container<AppRepositoryState> {
         reviews: null,
         finance: null,
         isExpired: false,
+        cityHall: null,
         images: new Array(),
         construction: EMPTY_CONSTRUCTION,
         tab: Tabs.CONSTRUCTION,
@@ -70,6 +72,10 @@ export class AppRepository extends Container<AppRepositoryState> {
 
     get images() {
         return this.state.images
+    }
+
+    get cityHall() {
+        return this.state.cityHall
     }
 
     setImages = async (images: Array<any>) => {
@@ -167,7 +173,7 @@ export class AppRepository extends Container<AppRepositoryState> {
     getConstructionData = async () => {
         const token = localStorage.getItem('token');
         let response = await ConstructionAPI.getConstruction(token as string)
-        if (response === null || response.length === 0) {
+        if (!(response?.construction?.length > 0)) {
             return null
         }
         // if (response.isExpired) {
@@ -175,7 +181,7 @@ export class AppRepository extends Container<AppRepositoryState> {
         //     await this.setState({ isExpired: true })
         //     return null
         // }
-        await this.setState({ construction: response[0] })
+        await this.setState({ construction: response.construction[0], cityHall: response.prefeitura })
         return this.state.construction!
     }
 

@@ -148,6 +148,46 @@ class ConstructionScene extends Component<RouteComponentProps<{}, StaticContext,
                                 </InputRow>
                             </CardComponent>
                         }
+                        {_.get(construction, 'docs.projetos') !== '' &&
+                            <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.projetos'))}>
+                                <InputRow style={{ justifyContent: 'space-between' }}>
+                                    <Label>Projetos: </Label>
+                                    <ArrowForwardIcon />
+                                </InputRow>
+                            </CardComponent>
+                        }
+                         {_.get(construction, 'docs.proposta') !== '' &&
+                            <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.proposta'))}>
+                                <InputRow style={{ justifyContent: 'space-between' }}>
+                                    <Label>Proposta: </Label>
+                                    <ArrowForwardIcon />
+                                </InputRow>
+                            </CardComponent>
+                        }
+                        {_.get(construction, 'docs.contrato') !== '' &&
+                            <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.contrato'))}>
+                                <InputRow style={{ justifyContent: 'space-between' }}>
+                                    <Label>Contrato: </Label>
+                                    <ArrowForwardIcon />
+                                </InputRow>
+                            </CardComponent>
+                        }
+                        {_.get(construction, 'docs.bombeiros') !== '' &&
+                            <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.bombeiros'))}>
+                                <InputRow style={{ justifyContent: 'space-between' }}>
+                                    <Label>Bombeiros: </Label>
+                                    <ArrowForwardIcon />
+                                </InputRow>
+                            </CardComponent>
+                        }
+                          {_.get(construction, 'docs.protocolos') !== '' &&
+                            <CardComponent onClick={() => this.openPdfLink(_.get(construction, 'docs.protocolos'))}>
+                                <InputRow style={{ justifyContent: 'space-between' }}>
+                                    <Label>Protocolos: </Label>
+                                    <ArrowForwardIcon />
+                                </InputRow>
+                            </CardComponent>
+                        }
                         {
                             construction.images?.length > 0 &&
                             <CardComponent onClick={async () => {
