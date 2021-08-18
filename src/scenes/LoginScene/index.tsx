@@ -79,7 +79,7 @@ class LoginScene extends Component<RouteComponentProps> {
                         <TextField placeholder='Seu e-mail' type='email' onChange={this.onChangeEmail} />
                         <TextField placeholder='Sua senha' isPassword={true} onChange={this.onChangePassword} onSubmit={this.onSubmitLogin} />
 
-                        <div style={{ width: '100%', textAlign: 'center' }}><Link to='/forgot-password'>Esqueci minha senha</Link></div>
+                        {/* <div style={{ width: '100%', textAlign: 'center' }}><Link to='/forgot-password'>Esqueci minha senha</Link></div> */}
                     </InputContainer>
                     <ButtonContainer>
                         <Button onClick={isLoading ? () => { } : this.onSubmitLogin} style={{ borderRadius: '8px', backgroundColor: Colors.primaryColor, borderColor: 'transparent', fontWeight: 'bold' }} size='large' type='primary'>{
